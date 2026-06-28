@@ -20,12 +20,17 @@ For "Potential Impact" and "Recommended Actions":
 - Do NOT invent facts or values.
 - Do NOT guess or speculate.
 
-If the telemetry does not clearly indicate the root cause, write exactly:
+
+
+If the telemetry is insufficient to determine a root cause,
+write:
 
 Possible Root Cause:
 Insufficient Data
 
-- If any information is unavailable, write "Insufficient Data".
+For Recommended Actions and Summary,
+always provide practical recommendations based only on the available telemetry.
+Do not leave these sections empty.
 - Keep the report short, professional, and suitable for an ISRO network engineer.
 
 ----------------------------
@@ -75,7 +80,12 @@ Recommended Actions:
 Summary:
 ...
 
-Do not add any extra headings or text.
+IMPORTANT:
+End your response immediately after the Summary.
+Do NOT repeat these instructions.
+Do NOT explain your reasoning.
+Do NOT mention the prompt or the rules.
+Output only the report.
 """
 
     return prompt

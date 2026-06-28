@@ -1,0 +1,23 @@
+GhostPilot ML Model Evaluation
+
+Algorithm:
+Random Forest Regressor
+
+Features:
+- Latency
+- Packet Loss
+- CPU Usage
+
+Target:
+- Network Risk Score
+
+Evaluation Metrics:
+
+Mean Absolute Error (MAE): 1.22
+
+R² Score: 1.00
+
+Notes:
+- Model trained on sample telemetry dataset.
+- Risk score is predicted automatically from telemetry.
+- Can be retrained with larger datasets for improved real-world performance.

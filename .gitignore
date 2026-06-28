@@ -4,3 +4,5 @@ __pycache__/
 venv/
 .env
 outputs/
+history/
+ml/risk_model.pkl

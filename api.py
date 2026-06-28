@@ -7,7 +7,8 @@ from rule_engine import evaluate_network
 from prompt_builder import create_prompt
 from ollama_client import ask_phi3
 from ml.predict import predict_risk
-
+import os
+import json
 app = FastAPI(
     title="GhostPilot AI Backend",
     description="Offline AI Network Copilot for ISRO Hackathon PS-13",
@@ -33,7 +34,21 @@ def health():
         "status": "OK",
         "service": "GhostPilot AI Backend"
     }
+@app.get("/history")
+def get_history():
 
+    reports = []
+
+    if not os.path.exists("history"):
+        return reports
+
+    for file in sorted(os.listdir("history"), reverse=True):
+
+        if file.endswith(".json"):
+            with open(os.path.join("history", file), "r") as f:
+                reports.append(json.load(f))
+
+    return reports
 
 @app.post("/analyze")
 def analyze(data: Telemetry):
@@ -62,6 +77,7 @@ def analyze(data: Telemetry):
         parsed_report = parse_report(report)
         response = {
         "network_status": status,
+        "predicted_risk": risk,
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "model": "phi3",
 
