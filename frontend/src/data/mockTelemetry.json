@@ -1,0 +1,92 @@
+[
+  {
+    "id": "run-104",
+    "status": "success",
+    "network_status": "Warning",
+    "predicted_risk": 55,
+    "generated_at": "2026-06-28 23:56:16 UTC",
+    "model": "Phi-3 (Quantized Edge)",
+    "telemetry": {
+      "latency": 45,
+      "packet_loss": 2.4,
+      "cpu": 60
+    },
+    "reason": "Elevated latency detected across Deep Space Gateway Alpha with slight packet degradation during ground station handoff.",
+    "possible_root_cause": "Sub-optimal buffer allocation in the primary telemetry ingest multiplexer combined with minor solar interference in X-band downlink.",
+    "potential_impact": "Potential 150ms delay in non-critical command acknowledgments. Telemetry archiving stream remains unaffected.",
+    "recommended_actions": "1. Re-route non-essential telemetry packets to secondary Ka-band transponder.\n2. Flush receive buffer on Gateway Router #4.\n3. Monitor packet loss thresholds for the next 15 minutes.",
+    "summary": "Network operating under moderate warning conditions. Autonomous predictive routing recommended to prevent threshold breach."
+  },
+  {
+    "id": "run-103",
+    "status": "success",
+    "network_status": "Critical",
+    "predicted_risk": 88,
+    "generated_at": "2026-06-28 23:42:05 UTC",
+    "model": "Phi-3 (Quantized Edge)",
+    "telemetry": {
+      "latency": 142,
+      "packet_loss": 8.7,
+      "cpu": 94
+    },
+    "reason": "Severe latency congestion and high packet drop rate observed on Mission Control Telemetry Bus Core-B.",
+    "possible_root_cause": "Memory leak in real-time telemetry packet decoder thread causing CPU saturation and subsequent queue drops.",
+    "potential_impact": "High risk of telemetry frame desynchronization during critical orbital burn simulation. Immediate manual intervention required.",
+    "recommended_actions": "1. Initiate warm restart of Telemetry Bus Core-B service.\n2. Switch active downlink stream to redundant backup server cluster.\n3. Alert Flight Dynamics officer regarding temporary telemetry stutter.",
+    "summary": "CRITICAL RISK DETECTED: Network congestion threatens real-time tracking fidelity. Failover procedure initiated."
+  },
+  {
+    "id": "run-102",
+    "status": "success",
+    "network_status": "Healthy",
+    "predicted_risk": 14,
+    "generated_at": "2026-06-28 23:15:30 UTC",
+    "model": "Phi-3 (Quantized Edge)",
+    "telemetry": {
+      "latency": 18,
+      "packet_loss": 0.1,
+      "cpu": 28
+    },
+    "reason": "All orbital communication links operating within nominal signal-to-noise ratio margins. No packet delays.",
+    "possible_root_cause": "N/A - Nominal operations.",
+    "potential_impact": "None. Optimal data transmission throughput maintained for all payload instruments.",
+    "recommended_actions": "Continue standard automated predictive polling at 60-second intervals.",
+    "summary": "Network telemetry nominal. All systems reporting healthy status."
+  },
+  {
+    "id": "run-101",
+    "status": "success",
+    "network_status": "Warning",
+    "predicted_risk": 62,
+    "generated_at": "2026-06-28 22:48:10 UTC",
+    "model": "Phi-3 (Quantized Edge)",
+    "telemetry": {
+      "latency": 68,
+      "packet_loss": 3.8,
+      "cpu": 78
+    },
+    "reason": "Intermittent packet jitter observed during tracking radar calibration phase.",
+    "possible_root_cause": "High concurrent network traffic from raw SAR image downlink competing with telemetry streams.",
+    "potential_impact": "Minor display latency on ground station auxiliary consoles.",
+    "recommended_actions": "1. Apply Quality of Service (QoS) priority tagging to high-frequency telemetry frames.\n2. Throttled SAR background sync by 20%.",
+    "summary": "Moderate network strain due to concurrent high-bandwidth science downlink. QoS adjustment recommended."
+  },
+  {
+    "id": "run-100",
+    "status": "success",
+    "network_status": "Healthy",
+    "predicted_risk": 21,
+    "generated_at": "2026-06-28 22:10:00 UTC",
+    "model": "Phi-3 (Quantized Edge)",
+    "telemetry": {
+      "latency": 22,
+      "packet_loss": 0.3,
+      "cpu": 35
+    },
+    "reason": "Nominal link performance established after pass handover to Bangalore Ground Station.",
+    "possible_root_cause": "N/A - Nominal operations.",
+    "potential_impact": "None. Full mission tracking readiness.",
+    "recommended_actions": "Maintain routine automated diagnostics.",
+    "summary": "Stable ground-to-satellite network telemetry verified."
+  }
+]

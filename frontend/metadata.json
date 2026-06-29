@@ -1,0 +1,8 @@
+{
+  "name": "GhostPilot Dashboard",
+  "description": "AI-powered Predictive Network Monitoring Dashboard for ISRO Mission Control Center",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
