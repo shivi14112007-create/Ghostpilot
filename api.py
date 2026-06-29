@@ -3,16 +3,18 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
+from sklearn.linear_model import LinearRegression
+import numpy as np
 from parser import parse_report
 from history_manager import save_report
 from rule_engine import evaluate_network
 from prompt_builder import create_prompt
 from ollama_client import ask_phi3
 from ml.predict import predict_risk
-
+from glob import glob
 import os
 import json
+
 
 app = FastAPI(
     title="GhostPilot AI Backend",
@@ -33,6 +35,19 @@ class Telemetry(BaseModel):
     latency: int
     packet_loss: int
     cpu: int
+def load_risk_history():
+    history = []
+
+    files = sorted(glob("history/analysis_*.json"))
+
+    for file in files:
+        with open(file, "r") as f:
+            data = json.load(f)
+
+        if "predicted_risk" in data:
+            history.append(data["predicted_risk"])
+
+    return history
 
 
 @app.get("/")
@@ -46,7 +61,9 @@ def home():
 def health():
     return {
         "status": "OK",
-        "service": "GhostPilot AI Backend"
+        "service": "GhostPilot AI Backend",
+        "model": "phi3",
+        "version": "1.0"
     }
 
 
@@ -64,8 +81,32 @@ def get_history():
                 reports.append(json.load(f))
 
     return reports
+@app.get("/predict/trajectory")
+def predict_trajectory():
+    history = load_risk_history()
 
+    X = np.arange(len(history)).reshape(-1, 1)
+    y = np.array(history)
 
+    model = LinearRegression()
+    model.fit(X, y)
+
+    future_x = np.arange(len(history), len(history) + 10).reshape(-1, 1)
+    future_y = model.predict(future_x)
+
+    return {
+        "history": [
+            {"time": i, "risk": int(r)}
+            for i, r in enumerate(history)
+        ],
+        "prediction": [
+    {
+        "time": len(history) + i,
+        "risk": max(0, min(100, int(round(r))))
+    }
+    for i, r in enumerate(future_y)
+]
+    }
 @app.post("/analyze")
 def analyze(data: Telemetry):
  try:
@@ -90,6 +131,7 @@ def analyze(data: Telemetry):
         data.cpu,
         risk
     )
+
 
     report = ask_phi3(prompt)
     parsed_report = parse_report(report)
