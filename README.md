@@ -9,10 +9,13 @@ GhostPilot is an offline AI-powered Network Copilot developed for ISRO Hackathon
 - Network Rule Engine
 - AI-based Network Analysis
 - JSON Telemetry Input
+- Future Risk Trajectory Prediction using Machine Learning
 
 ## Tech Stack
 
 - Python
+- FastAPI
+- Scikit-learn
 - Ollama
 - Phi-3
 - JSON
@@ -21,13 +24,15 @@ GhostPilot is an offline AI-powered Network Copilot developed for ISRO Hackathon
 
 ```bash
 python app.py
-
 ```
+
 ## API Endpoints
 
 ### Health Check
 
+```
 GET /health
+```
 
 Response:
 
@@ -42,7 +47,9 @@ Response:
 
 ### Analyze Network
 
+```
 POST /analyze
+```
 
 Request:
 
@@ -74,6 +81,52 @@ Response:
 
 ### Analysis History
 
+```
 GET /history
+```
 
-Returns all previous analysis reports stored in the history folder.
+Returns all previously generated network analysis reports stored in the `history/` folder.
+
+---
+
+### Future Risk Trajectory Prediction
+
+```
+GET /predict/trajectory
+```
+
+Predicts the future network risk trend using a **Linear Regression** model trained on historical risk scores.
+
+Response:
+
+```json
+{
+  "history": [
+    {
+      "time": 0,
+      "risk": 100
+    },
+    {
+      "time": 1,
+      "risk": 99
+    }
+  ],
+  "prediction": [
+    {
+      "time": 20,
+      "risk": 26
+    },
+    {
+      "time": 21,
+      "risk": 23
+    }
+  ]
+}
+```
+
+**Description**
+
+- Reads historical risk values from the `history/` directory.
+- Trains a Linear Regression model using previous risk scores.
+- Forecasts the next **10** risk values.
+- Supplies data for the **Future ML Trajectory Predictions** chart displayed on the GhostPilot dashboard.
